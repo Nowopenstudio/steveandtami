@@ -1,26 +1,246 @@
 @import "tailwindcss";
 
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --white: #E0D4C7;
+  --offWhite: #CDCCC8;
+  --black: #151515;
+  --gray: #a4a4a4;
+  --red: #9C3513;
+  --green: #31533F;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+.embedStage iframe {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+}
+
+
+.noControl mux-player {
+  /* Hide all controls at once */
+  --controls: none;
+}
+
+
+mux-player {
+  clip-path: inset(2px 2px);
+}
+
+.bgMux mux-player {
+  --controls: none;
+  --media-object-fit: cover;
+  position: absolute;
+  width: calc(100% + 1px);
+  height: calc(100% + 1px);
+}
+
+.containH mux-player {
+
+  width: auto;
+  height: 100%;
+}
+
+.containW mux-player {
+
+  width: 100%;
+  height: auto;
+}
+
+mux-player {
+
+
+  /* Target all sections by excluding the section prefix */
+
+  --live-button: none;
+  --seek-backward-button: none;
+  --seek-forward-button: none;
+  --mute-button: none;
+
+  --pip-button: none;
+  --playback-rate-button: none;
+  --rendition-menu-button: none;
+  clip-path: inset(0 0);
+
+}
+
+.workStage mux-player {
+  clip-path: inset(1px 1px);
+  -webkit-clip-path: inset(1px 1px);
+}
+
+
+
+*,
+*:before,
+*:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+
+@font-face {
+  font-family: 'canela';
+  src: url('/fonts/canela.woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'caslon';
+  src: url('/fonts/caslon-reg.woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'caslon';
+  src: url('/fonts/caslon-italics.woff2');
+  font-weight: 500;
+  font-style: italic;
+}
+
+
+
+body {
+  font-family: 'caslon', 'Times New Roman', Times, serif;
+  font-size: 16pt;
+}
+
+h1 {
+  font-family: 'canela', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 142pt;
+  line-height: .96em;
+  text-transform: uppercase;
+}
+
+.hero {
+  text-transform: uppercase;
+  font-size: 15vw;
+  ;
+  line-height: .96em;
+}
+
+h2 {
+  font-family: 'caslon', 'Times New Roman', Times, serif;
+  font-size: 36pt;
+  line-height: 1em;
+
+}
+
+.richText p {
+  margin-bottom: 20px;
+}
+
+.resource {
+  transition: all 1s ease-in-out;
+}
+
+/* hover actives */
+.hoverActive .infoHide,
+.hoverActive .logoHold {
+  opacity: 0;
+}
+
+
+
+
+@keyframes typeOn {
+  0% {
+    opacity: 0;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.readyIn {
+  opacity: 0
+}
+
+/* fade in*/
+.fadeIn,
+.pageReady .readyIn {
+  opacity: 0;
+  animation: fadeIn 1.5s ease-in-out forwards;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: .4;
+  }
+
+  30% {
+    opacity: .4;
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+}
+
+@media (max-width:600px) {
+  h1 {
+    font-size: 58pt;
+  }
+
+  .hero {
+    font-size: 20vw;
+  }
+
+  p,
+  body {
+    font-size: 12pt;
+  }
+
+
+
+  h2 {
+    font-size: 24pt;
+  }
 }
