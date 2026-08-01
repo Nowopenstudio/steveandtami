@@ -34,13 +34,13 @@ export default function Landing({ data }: any) {
     const [resourceReached, setResourceReached] = useState(false);
     useMotionValueEvent(scrollY, "change", () => {
         if (!resourceRef.current) return;
-        setResourceReached(resourceRef.current.getBoundingClientRect().top <= 0);
+        setResourceReached(resourceRef.current.getBoundingClientRect().top <= window.innerHeight / 2);
     });
 
     return (
         <React.Fragment>
             <Intro loader={data.loader} />
-            <div className="w-screen h-screen sticky top-0 z-0 bg-(--black) introStage">
+            <div className="w-screen h-[100dvh] sticky top-0 z-0 bg-(--black) introStage">
                 <motion.div className="w-full h-full stage relative overflow-hidden ">
                     <motion.div className="absolute z-0 w-full h-full top-0 left-0 scale-100" style={{ y, opacity }}>
                         <SwitchContent work={data.cover} title={'landing'} cover={true} />
@@ -100,11 +100,11 @@ export default function Landing({ data }: any) {
 
             </div>
             <div className="w-screen min-h-[200vh] pb-[100vh] z-20 relative">
-                <div className="w-full min-h-screen bg-(--white) grid grid-cols-12 items-start justify-center">
+                <div className={`venue w-full min-h-screen grid grid-cols-12 items-start justify-center mb-[100px] md:mb-0 ${resourceReached ? "bg-(--green) text-(--white)" : "bg-(--white) text-(--red)"}`}>
                     <div className="col-span-full md:col-span-10 lg:col-span-8 col-start-0 md:col-start-1 lg:col-start-3 relative pt-[100px]">
                         <BlurIn alt="image" height={0} width={0} sizes="200vh" src={"/images/frametop.png"} className={`w-full h-auto  object-fill relative`} />
                         <BlurIn className="absolute top-0 left-0 w-full h-full flex items-center pt-[150px] lg:pt-[300px] justify-center" delay={.5}>
-                            <Image alt="image" height={0} width={0} sizes="200vh" src={"/images/loc.svg"} className={`w-auto h-[70px] lg:h-[150px]  object-fill relative`} />
+                            <Image alt="image" height={0} width={0} sizes="200vh" src={"/images/loc.svg"} className={`translate-x-[-10%] md:translate-x-0 w-auto h-[70px] lg:h-[150px]  object-fill relative`} />
 
                         </BlurIn>
                     </div>
@@ -120,7 +120,7 @@ export default function Landing({ data }: any) {
                                 <PortableText value={data.venue.description} />
                             </div>
                             {data.venue.website && (
-                                <Link href={data.venue.website.link} target="_blank" rel="noopener noreferrer" className="w-[90vw] lg:w-auto  p-4 border-(--red) border uppercase text-center hover:bg-(--red) hover:text-(--white)"><p>{data.venue.website.title}</p></Link>
+                                <Link href={data.venue.website.link} target="_blank" rel="noopener noreferrer" className="w-[50vw] lg:w-auto  p-4 border-(--red) border uppercase text-center hover:bg-(--red) hover:text-(--white)"><p>{data.venue.website.title}</p></Link>
                             )}
 
                         </BlurIn>
@@ -132,7 +132,7 @@ export default function Landing({ data }: any) {
                 >
                     <BlurIn className="py-[100px] col-span-full text-center"><h1>Resources</h1></BlurIn>
                     {data.resources?.map((item: any, index: number) => (
-                        <BlurIn key={index} className="col-span-full lg:col-span-6 lg:col-start-4 p-4 flex-col justify-start items-center mb-[80px] gap-[40px]">
+                        <BlurIn key={index} className="col-span-full lg:col-span-6 lg:col-start-4 p-4 flex-col justify-start items-center gap-[40px]">
                             {item.cover?.image && (
                                 <Image alt="image" height={0} width={0} sizes="100vh" src={item.cover.image} className={`w-full h-auto  object-fill relative mb-[30px]`} />
                             )}

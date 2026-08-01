@@ -10,6 +10,10 @@
   --green: #31533F;
 }
 
+html {
+  overflow-x: clip;
+}
+
 /* Lenis */
 html.lenis,
 html.lenis body {
@@ -128,11 +132,12 @@ mux-player {
 body {
   font-family: 'caslon', 'Times New Roman', Times, serif;
   font-size: 16pt;
+  overflow-x: clip;
 }
 
 h1 {
   font-family: 'canela', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  font-size: 142pt;
+  font-size: 8vw;
   line-height: .96em;
   text-transform: uppercase;
 }
@@ -155,7 +160,8 @@ h2 {
   margin-bottom: 20px;
 }
 
-.resource {
+.resource,
+.venue {
   transition: all 1s ease-in-out;
 }
 
@@ -226,7 +232,7 @@ h2 {
 
 @media (max-width:600px) {
   h1 {
-    font-size: 48pt;
+    font-size: 14vw;
   }
 
   .hero {
