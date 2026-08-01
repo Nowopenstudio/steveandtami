@@ -91,7 +91,7 @@ export async function generateMetadata() {
     keywords: `${data.meta.keywords}`,
     description: `${data.meta.description}`,
     openGraph: {
-      images: data.meta.image
+      images: `${data.meta.image}?auto=format&amp;w=500`
     }
   };
 }

@@ -100,7 +100,7 @@ export default function Landing({ data }: any) {
 
             </div>
             <div className="w-screen min-h-[200vh] pb-[100vh] z-20 relative">
-                <div className={`venue w-full min-h-screen grid grid-cols-12 items-start justify-center mb-[100px] md:mb-0 ${resourceReached ? "bg-(--green) text-(--white)" : "bg-(--white) text-(--red)"}`}>
+                <div className={`venue w-full min-h-screen grid grid-cols-12 items-start justify-center pb-[100px] md:mb-0 ${resourceReached ? "bg-(--green) text-(--white)" : "bg-(--white) text-(--red)"}`}>
                     <div className="col-span-full md:col-span-10 lg:col-span-8 col-start-0 md:col-start-1 lg:col-start-3 relative pt-[100px]">
                         <BlurIn alt="image" height={0} width={0} sizes="200vh" src={"/images/frametop.png"} className={`w-full h-auto  object-fill relative`} />
                         <BlurIn className="absolute top-0 left-0 w-full h-full flex items-center pt-[150px] lg:pt-[300px] justify-center" delay={.5}>
