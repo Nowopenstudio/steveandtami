@@ -11,14 +11,10 @@ const writeClient = createClient({
 
 export async function POST(req: Request) {
   const body = await req.json()
-  const { firstName, lastName, email, plusOne, guest } = body
+  const { firstName, lastName, email } = body
 
   if (!firstName || !lastName || !email) {
     return Response.json({ error: "First name, last name, and email are required" }, { status: 400 })
-  }
-
-  if (plusOne && (!guest?.firstName || !guest?.lastName)) {
-    return Response.json({ error: "Guest first and last name are required for a plus one" }, { status: 400 })
   }
 
   try {
@@ -37,8 +33,6 @@ export async function POST(req: Request) {
         firstName,
         lastName,
         email,
-        plusOne: !!plusOne,
-        ...(plusOne ? { guest: { firstName: guest.firstName, lastName: guest.lastName } } : {}),
       }])
       .commit()
 

@@ -16,12 +16,15 @@ export default async function Home(props: {
         keywords,
         "image": image.asset->url
       },
+      password,
       loader[]{
         "image": asset->url
       },
       cover{
         "image": image.asset->url,
         "overlay": overlay.asset->url,
+        "mobImage": mobImage.asset->url,
+        "mobOverlay": mobOverlay.asset->url,
         "vid": video.asset->playbackId,
         "ratio": video.asset->data.aspect_ratio
       },
@@ -38,14 +41,16 @@ export default async function Home(props: {
           "vid": video.asset->playbackId,
           "ratio": video.asset->data.aspect_ratio
         },
-        attr[]{
+        info[]{
           title,
           description,
           cover{
             "image": image.asset->url,
             "vid": video.asset->playbackId,
             "ratio": video.asset->data.aspect_ratio
-          }
+          },
+          website,
+          
         }
       },
       resources[]{
@@ -58,6 +63,7 @@ export default async function Home(props: {
           "ratio": video.asset->data.aspect_ratio
         }
       },
+      contact,
       endcap{
         "image": image.asset->url,
         "vid": video.asset->playbackId,

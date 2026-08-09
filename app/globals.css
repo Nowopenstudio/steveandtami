@@ -133,6 +133,7 @@ body {
   font-family: 'caslon', 'Times New Roman', Times, serif;
   font-size: 16pt;
   overflow-x: clip;
+  line-height: 1.1em;
 }
 
 h1 {

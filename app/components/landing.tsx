@@ -1,14 +1,16 @@
 'use client'
 
 import React, { useRef, useState } from "react";
-import { motion, useScroll, useTransform, useMotionValueEvent } from "motion/react";
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from "motion/react";
 import { PortableText } from "next-sanity";
 import { SwitchContent } from "@/lib/util/contentSwitch";
 import { BlurIn } from "@/lib/util/BlurIn";
 import { usePageSettled } from "@/lib/util/usePageSettled";
 import Intro from "./Intro";
+import PasswordGate from "./PasswordGate";
 import Image from "next/image";
 import Link from "next/link";
+import { useMediaQuery, BREAKPOINTS } from "@/lib/util/misc";
 
 
 
@@ -30,6 +32,10 @@ export default function Landing({ data }: any) {
 
     const settled = usePageSettled();
 
+    const isMdUp = useMediaQuery(BREAKPOINTS.md);
+
+    const [unlocked, setUnlocked] = useState(!data.password);
+
     const resourceRef = useRef<HTMLDivElement>(null);
     const [resourceReached, setResourceReached] = useState(false);
     useMotionValueEvent(scrollY, "change", () => {
@@ -37,13 +43,28 @@ export default function Landing({ data }: any) {
         setResourceReached(resourceRef.current.getBoundingClientRect().top <= window.innerHeight / 2);
     });
 
+    if (!unlocked) {
+        return (
+            <AnimatePresence>
+                <PasswordGate password={data.password} onUnlock={() => setUnlocked(true)} />
+            </AnimatePresence>
+        );
+    }
+
     return (
         <React.Fragment>
             <Intro loader={data.loader} />
             <div className="w-screen h-[100dvh] sticky top-0 z-0 bg-(--black) introStage">
                 <motion.div className="w-full h-full stage relative overflow-hidden ">
                     <motion.div className="absolute z-0 w-full h-full top-0 left-0 scale-100" style={{ y, opacity }}>
-                        <SwitchContent work={data.cover} title={'landing'} cover={true} />
+                        {isMdUp ? (
+                            <Image alt="image" height={0} width={0} sizes="200vh" src={data.cover.image} className={`w-full h-full object-cover`} />
+
+                        ) : (
+                            <Image alt="image" height={0} width={0} sizes="200vh" src={data.cover.mobImage} className={`w-full h-full object-cover`} />
+
+                        )}
+
                         <div
                             className="absolute inset-0 backdrop-blur-2xl backdrop-brightness-125 backdrop-saturate-75 pointer-events-none"
                             style={{
@@ -52,13 +73,21 @@ export default function Landing({ data }: any) {
                             }}
                         />
                     </motion.div>
-                    <motion.div className="absolute z-11 w-full h-full top-0 left-0 scale-100" style={{ y }}>
-                        <Image alt="image" height={0} width={0} sizes="200vh" src={data.cover.overlay} className={`w-full h-full object-cover`} />
+                    {isMdUp ? (
+                        data.cover && data.cover.overlay && <motion.div className="absolute z-11 w-full h-full top-0 left-0 scale-100" style={{ y }}>
+                            <Image alt="image" height={0} width={0} sizes="200vh" src={data.cover.overlay} className={`w-full h-full object-cover`} />
 
-                    </motion.div>
+                        </motion.div>
+                    ) : (
+                        data.cover && data.cover.mobOverlay && <motion.div className="absolute z-11 w-full h-full top-0 left-0 scale-100" style={{ y }}>
+                            <Image alt="image" height={0} width={0} sizes="200vh" src={data.cover.mobOverlay} className={`w-full h-full object-cover`} />
+
+                        </motion.div>
+                    )}
+
                     <div className="absolute h-1/2 w-screen z-1 bg-linear-to-b from-[#403221] to-transparent opacity-80"></div>
                     <div className="w-full lg:h-full grid grid-cols-12 items-start relative z-10 text-(--white) text-center uppercase [text-shadow:0_2px_12px_rgba(0,0,0,0.35)]">
-                        <BlurIn className="col-span-8 col-start-3 pt-[40px] lg:pt-[100px] mb-[20px] lg:mb-0">
+                        <BlurIn className="col-span-8 col-start-3 pt-[100px] mb-[20px] lg:mb-0">
                             <div className="w-full mb-4"><PortableText value={data.info.intro} /></div>
                             <h1 className="hero w-full">Steven & Tami</h1>
                         </BlurIn>
@@ -114,9 +143,8 @@ export default function Landing({ data }: any) {
 
                     </div>
                     <div className="col-span-full md:col-span-10 lg:col-span-8 col-start-0 md:col-start-1 lg:col-start-3 relative pb-[100px]">
-                        <BlurIn alt="image" height={0} width={0} sizes="200vh" src={"/images/framebot.png"} className={`translate-y-[100%] lg:translate-y-0 w-full h-auto  object-fill relative`} />
-                        <BlurIn delay={.5} className="absolute top-0 left-0 w-full h-full flex flex-col gap-y-[20px] items-center  justify-start  lg:pt-[40px] text-(--red)">
-                            <div className="lg:w-1/2 text-center italic richText">
+                        <BlurIn delay={.5} className="w-full h-full flex flex-col gap-y-[20px] items-center  justify-start  lg:pt-[40px] text-(--red)">
+                            <div className="lg:w-2/3 text-center italic richText">
                                 <PortableText value={data.venue.description} />
                             </div>
                             {data.venue.website && (
@@ -125,7 +153,35 @@ export default function Landing({ data }: any) {
 
                         </BlurIn>
                     </div>
+                    <div id="info" className="infoPage col-span-full lg:col-span-10 lg:col-start-2 grid grid-cols-3 justify-center items-start">
+                        {data.venue.info.map((item: any, i: number) => (<BlurIn key={i} className="col-span-full lg:col-span-1 p-4 flex justify-center items-start gap-[40px]">
+                            <div>
+                                <h2 className="w-full text-center uppercase mb-2 ">{item.title}</h2>
+                                <div className="richText italic w-full text-center">
+                                    <PortableText value={item.description} />
+                                </div>
+                            </div>
+                        </BlurIn>))}
+                        <BlurIn className="col-span-full lg:col-span-1 p-4 flex justify-center items-start gap-[40px]">
+
+                            <div>
+                                <h2 className="w-full text-center uppercase mb-2">Contact Us</h2>
+                                <div className=" italic w-full text-center">
+                                    <p>{data.contact.phone}</p>
+                                    <a href={`mailto:$${data.contact.email}`}>
+                                        <p>{data.contact.email}</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </BlurIn>
+
+                    </div>
+                    <div className="col-span-full md:col-span-10 lg:col-span-8 col-start-0 md:col-start-1 lg:col-start-3 relative ">
+                        <BlurIn alt="image" height={0} width={0} sizes="200vh" src={"/images/framebot.png"} className={`w-full h-auto translate-y-[-50%] lg:translate-y-0  object-fill relative`} /></div>
+
+
                 </div>
+
                 <div
                     ref={resourceRef}
                     className={`resource w-full min-h-screen grid grid-cols-12 items-start justify-center text-center transition-colors duration-300 ${resourceReached ? "bg-(--green) text-(--white)" : "bg-(--white) text-(--red)"}`}

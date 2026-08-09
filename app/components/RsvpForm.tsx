@@ -7,9 +7,6 @@ export default function RsvpForm({ onClose }: { onClose: () => void }) {
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
-    const [plusOne, setPlusOne] = useState(false)
-    const [guestFirstName, setGuestFirstName] = useState("")
-    const [guestLastName, setGuestLastName] = useState("")
     const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle")
     const [error, setError] = useState("")
 
@@ -26,8 +23,6 @@ export default function RsvpForm({ onClose }: { onClose: () => void }) {
                     firstName,
                     lastName,
                     email,
-                    plusOne,
-                    guest: plusOne ? { firstName: guestFirstName, lastName: guestLastName } : undefined,
                 }),
             })
 
@@ -77,6 +72,8 @@ export default function RsvpForm({ onClose }: { onClose: () => void }) {
                     <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-6">
                         <h2 className="uppercase text-center mb-2">RSVP</h2>
 
+                        <p className=" text-center ">NOTE: We love little ones, but this is an adults only/invite only reception, and cannot accommodate extra plus ones.</p>
+
                         <label className="flex flex-col gap-1 text-sm uppercase">
                             First Name
                             <input
@@ -107,38 +104,6 @@ export default function RsvpForm({ onClose }: { onClose: () => void }) {
                                 className="border-(--black) border p-2"
                             />
                         </label>
-
-                        <label className="flex items-center gap-2 text-sm uppercase">
-                            <input
-                                type="checkbox"
-                                checked={plusOne}
-                                onChange={(e) => setPlusOne(e.target.checked)}
-                            />
-                            Bringing a plus one
-                        </label>
-
-                        {plusOne && (
-                            <div className="flex flex-col gap-4 border-t border-(--gray) pt-4">
-                                <label className="flex flex-col gap-1 text-sm uppercase">
-                                    Guest First Name
-                                    <input
-                                        required
-                                        value={guestFirstName}
-                                        onChange={(e) => setGuestFirstName(e.target.value)}
-                                        className="border-(--black) border p-2"
-                                    />
-                                </label>
-                                <label className="flex flex-col gap-1 text-sm uppercase">
-                                    Guest Last Name
-                                    <input
-                                        required
-                                        value={guestLastName}
-                                        onChange={(e) => setGuestLastName(e.target.value)}
-                                        className="border-(--black) border p-2"
-                                    />
-                                </label>
-                            </div>
-                        )}
 
                         {status === "error" && <p className="text-(--red) text-sm">{error}</p>}
 
