@@ -145,9 +145,9 @@ h1 {
 
 .hero {
   text-transform: uppercase;
-  font-size: 15vw;
-  ;
-  line-height: .96em;
+  font-size: 13.5vw;
+  line-height: .8em;
+  margin-top: 46px;
 }
 
 h2 {
