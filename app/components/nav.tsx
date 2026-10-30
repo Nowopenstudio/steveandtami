@@ -8,7 +8,7 @@ import React from "react"
 import Link from "next/link"
 import RsvpForm from "./RsvpForm"
 
-export default function Nav({ active }: any) {
+export default function Nav({ active, rsvpNote }: any) {
     const pathname = usePathname()
     const lenis = useLenis()
     const [workMode, setWorkMode] = useState(false)
@@ -26,7 +26,7 @@ export default function Nav({ active }: any) {
                 <p>RSVP</p>
             </div></div>}
             <AnimatePresence>
-                {rsvpOpen && <RsvpForm onClose={() => setRsvpOpen(false)} />}
+                {rsvpOpen && <RsvpForm note={rsvpNote} onClose={() => setRsvpOpen(false)} />}
             </AnimatePresence>
         </React.Fragment>
     );

@@ -21,9 +21,10 @@ export default async function RootLayout({
   const query = await getData(`{
       'data': *[_type == 'settings'][0]{
         rsvpActive
-      }
+      },
+      'rsvpNote': *[_type == 'rsvp'][0].note
     }`)
-  const { data } = query.data
+  const { data, rsvpNote } = query.data
 
 
   return (
@@ -35,7 +36,7 @@ export default async function RootLayout({
 
         <body className="w-screen  bg-(--white)">
           {/* <Grid /> */}
-          <Nav active={data.rsvpActive} />
+          <Nav active={data.rsvpActive} rsvpNote={rsvpNote} />
           {children}
         </body>
       </SmoothScrolling>

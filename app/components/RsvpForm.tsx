@@ -2,8 +2,9 @@
 
 import { useState } from "react"
 import { motion } from "motion/react"
+import { PortableText } from "next-sanity"
 
-export default function RsvpForm({ onClose }: { onClose: () => void }) {
+export default function RsvpForm({ note, onClose }: { note?: any; onClose: () => void }) {
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
@@ -72,7 +73,7 @@ export default function RsvpForm({ onClose }: { onClose: () => void }) {
                     <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-6">
                         <h2 className="uppercase text-center mb-2">RSVP</h2>
 
-                        <p className=" text-center ">NOTE: We love little ones, but this is an adults only/invite only reception, and cannot accommodate extra plus ones.</p>
+                        {note && <div className="text-center rsvpNote"><PortableText value={note} /></div>}
 
                         <label className="flex flex-col gap-1 text-sm uppercase">
                             First Name
